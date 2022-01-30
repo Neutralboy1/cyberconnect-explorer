@@ -55,10 +55,17 @@ const fetchApi = async () => {
     return data;
 }
 
-fetchApi()
-.then(data => console.log(data['result'] * Math.pow(10, -18)));
-console.log(3);
+//fetchApi()
+//.then(data => console.log(data['result'] * Math.pow(10, -18)));
+const test = fetchApi();
+console.log(test);
+test.then((data) => {
+    console.log(data);
+    console.log(test);
+});
 console.log(4);
+console.log(test);
+
 
 // // calling back an etherscan account 3 times, one after the other, but with callback hell.
 // getToDos('https://api.etherscan.io/api?module=account&action=balance&address=0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae&tag=latest&apikey=ECK9EWNEXGYJUEAACITH3F2N8DC6GMMHS9', (err, data) => {
