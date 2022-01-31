@@ -48,20 +48,30 @@ console.log(2);
 // console.log(4);
 
 //fetching api using async await
-const fetchApi = async () => {
-    const response = await fetch('https://api.etherscan.io/api?module=account&action=balance&address=0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae&tag=latest&apikey=ECK9EWNEXGYJUEAACITH3F2N8DC6GMMHS9');
+const fetchApi = async (address) => {
+    const response = await fetch(`https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&page=1&offset=10&sort=asc&apikey=ECK9EWNEXGYJUEAACITH3F2N8DC6GMMHS9`);
     const data = await response.json();
-
     return data;
 }
 
 //fetchApi()
 //.then(data => console.log(data['result'] * Math.pow(10, -18)));
-const test = fetchApi();
+const test = fetchApi('0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a');
 console.log(test);
+const transSet = new Set();
+
+// return the the list of addresses from the outward transactions.
 test.then((data) => {
-    console.log(data);
-    console.log(test);
+    let transArray = data.result;
+    for(let i = 0; i < transArray.length; i++) {
+        if(transArray[i].to !== "") {
+            transSet.add(transArray[i].to);
+        }
+    }
+    const iterator = transSet.values();
+    for(const elem of iterator) {
+        console.log(elem);
+    }
 });
 console.log(4);
 console.log(test);
